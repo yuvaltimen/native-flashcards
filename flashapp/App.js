@@ -1,138 +1,41 @@
-import * as React from 'react';
+import { useEffect} from "react";
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import DeckListView from './components/DeckListView';
+import DeckView from './components/DeckView';
+import TestView from './components/TestView';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { SafeAreaView, FlatList } from 'react-native-web';
-import CardListView from './components/CardListView';
+import { decks } from './data';
 
 
-
-const decks = [
-  {
-    id: '1',
-    deckName: "Spanish_101", 
-    cards: [
-      {
-        id: '1',
-        frontText: "Hola", 
-        backText: "Hello"
-    },
-      {
-        id: '2',
-        frontText: "Hola 2", 
-        backText: "Hello 2"
-    },
-      {
-        id: '3',
-        frontText: "Hola 3", 
-        backText: "Hello 3"
-    },
-    {
-      id: '10',
-      frontText: "kwqjef[poij", 
-      backText: "wqelkn"
-  },
-    {
-      id: '20',
-      frontText: "wq'eojf[iop1j] 2", 
-      backText: "wef 2"
-  },
-    {
-      id: '30',
-      frontText: "wf 3", 
-      backText: "wf 3"
-  },
-  {
-    id: '11',
-    frontText: "kwqjef[poij", 
-    backText: "wqelkn"
-},
-  {
-    id: '21',
-    frontText: "wq'eojf[iop1j] 2", 
-    backText: "wef 2"
-},
-  {
-    id: '3',
-    frontText: "wf 3", 
-    backText: "wf 3"
-}
-    ]
-  },
-  {
-    id: '2',
-    deckName: "Carpas", 
-    cards: [
-      {
-        id: '1',
-        frontText: "kwqjef[poij", 
-        backText: "wqelkn"
-    },
-      {
-        id: '2',
-        frontText: "wq'eojf[iop1j] 2", 
-        backText: "wef 2"
-    },
-      {
-        id: '3',
-        frontText: "wf 3", 
-        backText: "wf 3"
-    }
-    ]
-  }
-]
-
-
-for (const deck in deck) {
-  const result = await AsyncStorage.setItem(deck.deckName, JSON.stringify(deck.cards));
-  console.log(result);
-
-}
-
-function DetailsScreen({ route, navigation }) {
-  const { deckName } = route.params;
-  // const cards = AsyncStorage.getItem(deckName).then(val => JSON.parse(val));
-
-  const cards = decks[0].cards;
-  return (
-    <SafeAreaView>
-      <CardListView data={cards}/>
-    </SafeAreaView>
-  );
-}
-
-
-// TODO: Rename to deck list view
-function HomeScreen({ navigation }) {
-
-  
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <FlatList 
-        data={decks}
-        renderItem={({ item }) => <Button title={"Go to ".concat(item.deckName)} onPress={() => navigation.navigate('Deck', {deckName: item.deckName})}/>}
-        keyExtractor={(item) => item.id}
-      />
-    </SafeAreaView>
-  )
-}
 
 const Stack = createNativeStackNavigator();
 
-function App() {
+
+export default function App() {
+  
+  useEffect(() => {
+    const setDeckData = async () => {
+      await AsyncStorage.multiSet([[decks[0].deckName, JSON.stringify(decks[0].cards)], [decks[1].deckName, JSON.stringify(decks[1].cards)]])
+    }
+    setDeckData();
+
+}, []);
+
+
+        
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'My Decks' }}/>
-        <Stack.Screen name="Deck" component={DetailsScreen} options={{ title: 'Deck View' }}/>
+        <Stack.Screen name="Home" component={DeckListView} options={{ title: 'Deck List View' }}/>
+        <Stack.Screen name="Deck" component={DeckView} options={{ title: 'Card List View' }}/>
+        <Stack.Screen name="Test" component={TestView} options={{ title: 'Test Mode'}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
-
+};
 
 
 const styles = StyleSheet.create({
@@ -146,5 +49,3 @@ const styles = StyleSheet.create({
     marginTop: 5,
   }
 });
-
-export default App;

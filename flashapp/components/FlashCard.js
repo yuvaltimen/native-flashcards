@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, Dimensions } from 'react-native';
 
 import { useState } from 'react';
-import { TouchableOpacity } from 'react-native-web';
+import { TouchableOpacity } from 'react-native';
 
 
 const {height, width} = Dimensions.get('window');
