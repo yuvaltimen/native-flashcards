@@ -4,7 +4,7 @@ export const decks = [
         "cards": [
             {
                 "id": "1", 
-                "frontText": "Uno",
+                "frontText": "LONG FORMATS WHERE I TALK FOREVER AND NON ONE HEAR3EFPO EROIFJ LK JWEFONG FORMATS WHERE I TALK FOREVER AND NON ONE HEAR3EFPO EROIFJ LK JWEF",
                 "backText": "One"
             },
             {
