@@ -4,7 +4,7 @@ export const decks = [
         "cards": [
             {
                 "id": "1", 
-                "frontText": "LONG FORMATS WHERE I TALK FOREVER AND NON ONE HEAR3EFPO EROIFJ LK JWEFONG FORMATS WHERE I TALK FOREVER AND NON ONE HEAR3EFPO EROIFJ LK JWEF",
+                "frontText": "Uno",
                 "backText": "One"
             },
             {
@@ -19,8 +19,8 @@ export const decks = [
             },
             {
                 "id": "4",
-                "frontText": "Quatro",
-                "backText": "Four"
+                "frontText": "I'm not quite sure why I've gotten myself into this siutation byt I guarantee myself it;;=-oe2fij",
+                "backText": "I've gotten myself into this siutation byt I guarantee myself it;;=-oe2fij But where has it all gone"
             }
         ]
     },
@@ -43,6 +43,5 @@ export const decks = [
                 "backText": "Performance"
             }
         ]
-
     }
 ]

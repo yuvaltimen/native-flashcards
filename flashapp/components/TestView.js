@@ -1,10 +1,11 @@
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 export default function TestView({ route, navigation }) {
+    const { deckName } = route.params;
     return (
         <View>
             <Text>
-                TEST VIEW
+                {deckName} Test mode
             </Text>
         </View>
     )

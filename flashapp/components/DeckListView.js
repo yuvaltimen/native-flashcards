@@ -2,25 +2,43 @@
 
 import { useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Pressable, Text, FlatList, SafeAreaView, StyleSheet, View } from "react-native";
-import { decks } from "../data";
+import { Pressable, Text, FlatList, SafeAreaView, StyleSheet, View, Modal, Button, Alert } from "react-native";
 
 
 export default function DeckListView({ route, navigation }) {
 
     const [allDeckNames, updateAllDeckNames] = useState([]);
+
+    const createDeleteModal = (deckName) => {
+        console.log(deckName);
+        Alert.alert("WAIT!", "Are you sure you want to delete " + deckName + "?", 
+        [
+            {
+                text: 'Yes, delete',
+                onPress: () => {
+                    const removeItem = async () => {
+                        await AsyncStorage.removeItem(deckName);
+                    }
+                    removeItem();
+                },
+              },
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Canceled'),
+              },
+        ]
+        )
+    }
+
     useEffect(() => {
         const readAllDeckNames = async () => {  
-            AsyncStorage.getAllKeys().then(keys => updateAllDeckNames(keys));
+            const allDeckNames = await AsyncStorage.getAllKeys();
+            updateAllDeckNames(allDeckNames);
         }
-
         readAllDeckNames();
-    }, []);
-
-    console.log(allDeckNames);
+    }, [allDeckNames]);
 
     return (
-        
             <SafeAreaView style={styles.areaView}>
                 <View style={styles.areaView}>
                     <Pressable 
@@ -37,6 +55,7 @@ export default function DeckListView({ route, navigation }) {
                         return (
                         <Pressable 
                             style={({ pressed }) => [styles.deckButton || {}, {opacity:pressed ? 0.5 : 1}]}
+                            onLongPress={() => createDeleteModal(item)}
                             onPress={() => {navigation.navigate("DeckView", {deckName: item})}}>
                             <Text style={styles.deckButtonText}>
                                 {item}

@@ -15,12 +15,23 @@ const Stack = createNativeStackNavigator();
 
 
 export default function App() {
+
   
+  const allData = [];
+  for (const deck of decks) {
+    allData.push([deck.deckName, JSON.stringify(deck.cards)]);
+  }
+
   // Default data 
   useEffect(() => {
-    const setDeckData = async () => {
-      await AsyncStorage.multiSet([[decks[0].deckName, JSON.stringify(decks[0].cards)], [decks[1].deckName, JSON.stringify(decks[1].cards)]])
+    const clearAllKeys = async () => {
+      const allSetKeys = await AsyncStorage.getAllKeys();
+      await AsyncStorage.multiRemove(allSetKeys);
     }
+    const setDeckData = async () => {
+      await AsyncStorage.multiSet(allData);
+    }
+    clearAllKeys();
     setDeckData();
   }, []);
 
