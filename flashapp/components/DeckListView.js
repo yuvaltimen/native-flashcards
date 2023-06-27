@@ -56,7 +56,7 @@ export default function DeckListView({ route, navigation }) {
                         <Pressable 
                             style={({ pressed }) => [styles.deckButton || {}, {opacity:pressed ? 0.5 : 1}]}
                             onLongPress={() => createDeleteModal(item)}
-                            onPress={() => {navigation.navigate("DeckView", {deckName: item})}}>
+                            onPress={() => {navigation.navigate("DeckActionsView", {deckName: item})}}>
                             <Text style={styles.deckButtonText}>
                                 {item}
                             </Text>
@@ -65,7 +65,6 @@ export default function DeckListView({ route, navigation }) {
                         }}/>
                 </View>
             </SafeAreaView>
-        
     )
 }
 

@@ -5,7 +5,6 @@ import { TouchableOpacity } from 'react-native';
 
 
 const {height, width} = Dimensions.get('window');
-const screenDimensions = Dimensions.get('screen');
 
 
 function getFontSizeFromContentLength(str) {
@@ -22,7 +21,6 @@ function getFontSizeFromContentLength(str) {
     }
 }
 
-
 export default function FlashCard(props) {
 
     const {frontText, backText} = props;
@@ -35,13 +33,13 @@ export default function FlashCard(props) {
 
     
     return (
-        <Pressable style={({ pressed }) => [styles.flashCard || {}, {opacity:pressed ? 0.5 : 1}]} onPress={() => {
-            const toShow = viewingFront ? frontText : backText;
-            console.log(toShow);
-            setViewingFront(!viewingFront)
-            }
-        }>
-            
+        <Pressable 
+            style={({ pressed }) => [styles.flashCard || {}, {opacity:pressed ? 0.5 : 1}]} 
+            onPress={() => {
+                const toShow = viewingFront ? frontText : backText;
+                console.log(toShow);
+                setViewingFront(!viewingFront)
+            }}>
             <View style={styles.flashCard}>
                 <Text 
                     numberOfLines={multiLine ? numWords : 1}
@@ -70,6 +68,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         paddingVertical: 10,
         backgroundColor: '#5E548E',
+        flex: 1,
       },
       flashCardText: {
         color: '#E0B1CB',

@@ -7,16 +7,26 @@ import { useEffect } from 'react';
 
 const {height, width} = Dimensions.get('window');
 
+function cleanDeckName(name) {
+    const trimmed = name.trim();
+    if (trimmed.length > 10) {
+        return '';
+    }
+    return trimmed;
+}
+
 export default function DeckCreate({ route, navigation }) {
 
     const createNewDeck = async (deckName) => {
         console.log(deckName);
-        const cleanedDeckName = deckName.trim();
+
+        const cleanedDeckName = cleanDeckName(deckName);
+
         if (cleanedDeckName !== '') {
             await AsyncStorage.setItem(cleanedDeckName, JSON.stringify([]));
             navigation.navigate("DeckListView");
         } else {
-            alert("Deck name can't be empty!")
+            alert("Deck name can't be empty or exceed 10 characters")
         }
     }
 
